@@ -5,5 +5,5 @@ const bodyParser = require('body-parser');
 const path = require('path');
 //-----------------------------------
 
-app.use('/',express.static(path.join(__dirname,"../../Frountend")))
+app.use('/',express.static("../../Frountend/client"))
 module.exports = app;
