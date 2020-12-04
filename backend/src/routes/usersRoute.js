@@ -50,11 +50,24 @@ router.post('/all',(req,res) => {
 });
 //this route will be used to update user data the request will include 
 router.post('/update',(req,res)=> {
-  let mouseInfo = req.body.mouseInfo;
-  let pastCites = req.body.pastCites;
-  let keyStrokes = req.body.keyStrokes;
+  let token = req.cookies.token
+  let verifyedToken = tokenVerification.verifyFunc(token)
+  if(verifyedToken != false) {
+    let user = req.body.user;
 
-  
+    let mouseInfo = req.body.mouseInfo;
+    let pastCites = req.body.pastCites;
+    let keyStrokes = req.body.keyStrokes;
+    let osVerson = req.body.osVerson;
+    let browser = req.body.browser;
+    let ipAdress = req.body.ipAdress;
+    let timeEntered = req.body.timeEntered;
+    let timeLeft = req.body.timeLeft;
+    let game = req.body.game;
+
+    userState.update(user,mouseInfo,pastCites,keyStrokes,osVerson,browser,ipAdress,timeEntered,timeLeft,game)
+  }
+
 });
 
 
