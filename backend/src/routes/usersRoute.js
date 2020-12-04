@@ -1,4 +1,3 @@
-const e = require('express');
 const express = require('express');
 const router = express.Router();
 const userState = require('../state/users');
@@ -32,7 +31,7 @@ router.post('/profile',(req,res) => {
     //TODO add it so you need admin server auth
     let token = req.cookies.token
     let verifyedToken = tokenVerification.verifyFunc(token)
-    //if token cant be varified for what ever reson fall out
+    //if token cant be varified for what ever reason fall out
     if(verifyedToken == false) {
       res.status(403).send({message:"bad token"})
     }
@@ -48,7 +47,15 @@ router.post('/profile',(req,res) => {
 // returns all users requares admin auth
 router.post('/all',(req,res) => {
 
-})
+});
+//this route will be used to update user data the request will include 
+router.post('/update',(req,res)=> {
+  let mouseInfo = req.body.mouseInfo;
+  let pastCites = req.body.pastCites;
+  let keyStrokes = req.body.keyStrokes;
+
+  
+});
 
 
 

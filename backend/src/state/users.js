@@ -4,12 +4,26 @@ module.exports.createUser = (username) => {
     if(userExsists(username) == false) {
         //this is createing the json shema for a user
         // each will be an empty array latter to be filled with there respective items
+
+        //keyStrokes will be timestamps and corads
+        //location will be given baced apon ip address
+        //games will be broken into wins and losses 
+        //wins will have real fake and choice losses will have the same 
         users[username] = {
             "mousePos":[],
             "history":[],
-            "keyStrokes":[]
+            "keyStrokes":{
+            },
+            "osVerson": "",
+            "browser": "",
+            "ipAdress": "",
+            "location": "",
+            "timeEntered":"",
+            "timeLeft":"",
+            "games": {
+
+            }
         };
-        console.log(users)
         //returns true if user can be created
         return true
     } else {
