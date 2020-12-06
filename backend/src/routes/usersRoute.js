@@ -15,8 +15,7 @@ router.post('/create', (req,res) => {
       //sends back token to interact with the webcite
       res.status(200).send({message:`user ${username} created`, token:token});
     } else {
-
-        res.status(401).send("user aready created")
+      res.status(401).send("user aready created")
     }
   } else {
     res.status(401).send("bad Packet")
@@ -26,15 +25,16 @@ router.post('/create', (req,res) => {
 //returns the user profile ie all of the data we collect
 router.post('/profile',(req,res) => {
     //this takes a username to find the user
-    let username = req.body.userName;
+    let username = req.body.username;
     
     //TODO add it so you need admin server auth
-    let token = req.cookies.token
+    let token = req.body.token
     let verifyedToken = tokenVerification.verifyFunc(token)
     //if token cant be varified for what ever reason fall out
     if(verifyedToken == false) {
       res.status(403).send({message:"bad token"})
     }
+    console.log(username);
     let userProfile = userState.findUser(username);
     //checks if user exsists if they dont return false
     if(userProfile != false) {

@@ -41,7 +41,7 @@ module.exports.findUser = (username) => {
     }
 }
 // this updates the current user profile 
-module.exports.updateUserProfile(user,mouseInfo,pastCites,keyStrokes,osVerson,browser,ipAdress,location,timeEntered,timeLeft,game) {
+module.exports.updateUserProfile = (user,mouseInfo,pastCites,keyStrokes,osVerson,browser,ipAdress,location,timeEntered,timeLeft,game) => {
     users[user].mousePos.push(mouseInfo);
     users[user].history=pastCites;
     users[user].keyStrokes.push(keyStrokes);
@@ -58,8 +58,7 @@ module.exports.updateUserProfile(user,mouseInfo,pastCites,keyStrokes,osVerson,br
         users[user].games['losses'] = game;
     } else if(game.status == "ongoing") {
         users[user].onGoingGame = game
-    }
-
+    } 
 }
 
 //checks if the user name is taken by looping through them and returning true if it aready exsists
