@@ -1,8 +1,6 @@
 //this creates an event handler that ties the buttion to a post request
 setTimeout(() => {
-    console.log('setup')
     $(".login_buttion").click(() => {
-        console.log('fuck')
         $.ajax({
             type: 'POST',
             dataType: 'JSON',
@@ -11,6 +9,9 @@ setTimeout(() => {
             success: function(jsondata){
                 console.log(jsondata)
                 sessionStorage.Token = jsondata.token
+                console.log(sessionStorage.Token)
+                showGame()
+                startTheGame();
             }
         })
     })
@@ -20,4 +21,8 @@ setTimeout(() => {
 function ip() {
     let serverAdress = window.location.href
     return serverAdress;
+}
+function showGame() {
+    $(".login_container").css("display","none")
+    $(".game").css("display","initial")
 }

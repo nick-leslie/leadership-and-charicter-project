@@ -1,15 +1,17 @@
 const fs = require('fs')
 const path = require('path');
-const { versions } = require('process');
 const REAL_NEEDED = 9;
 let state = convertToJson();
+let real = getReal();
 
 module.exports.grabTweets = () => {
     let finalRealTweets = []
     let finalfakeTweet;
     let finalTweets = {}
-    let pool = getReal();// the tweets that have not been grabed
-
+    let pool = [];// the tweets that have not been grabed
+    for (let i = 0; i < real.length; i++) {
+        pool[i] = real[i];
+    }
     //get a random tweet and remove the one that has been grabed
     for (let i = 0; i < REAL_NEEDED; i++) {
         let indexGrabed = Math.floor(Math.random() * pool.length)
