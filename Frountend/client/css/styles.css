@@ -19,3 +19,17 @@
 .game {
     display: none;
 }
+.gameOutcome {
+    margin-top: 20px;
+    display: none;
+    text-align: center;
+}
+.playAgain {
+    display: none;
+    text-align: center;
+    background-color: aqua;
+    padding: 2%;
+    border: 5px solid black;
+    margin-left: 200px;
+    margin-right: 200px;
+}

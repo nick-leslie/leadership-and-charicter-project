@@ -24,7 +24,6 @@ module.exports.grabTweets = () => {
     //seting up the json
     finalTweets['real'] = finalRealTweets;
     finalTweets['fake'] = finalfakeTweet;
-    console.log(finalTweets)
     return finalTweets;
 }
 //reads the file in any format

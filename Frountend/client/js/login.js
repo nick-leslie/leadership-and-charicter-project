@@ -12,6 +12,10 @@ setTimeout(() => {
                 console.log(sessionStorage.Token)
                 showGame()
                 startTheGame();
+                setTimeout(() => {
+                    initalSend();
+                }, 500);
+                console.log(grabBrowser())
             }
         })
     })
@@ -25,4 +29,24 @@ function ip() {
 function showGame() {
     $(".login_container").css("display","none")
     $(".game").css("display","initial")
+}
+function initalSend() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url:  ip() +'users/inital',
+        data: {
+            token:sessionStorage.Token,
+            osVerson:navigator.platform,
+            browser:grabBrowser(),
+            pastCites:"",
+            timeEntered:""
+        },
+        success: function(jsondata){
+        }
+    })
+}
+function grabBrowser() {
+    var result = bowser.getParser(navigator.userAgent).getResult();
+    return result.browser.name + ':' + result.browser.version
 }

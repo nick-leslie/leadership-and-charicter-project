@@ -50,11 +50,10 @@ router.post('/all',(req,res) => {
 });
 //this route will be used to update user data the request will include 
 router.post('/update',(req,res)=> {
-  let token = req.cookies.token
+  let token = req.body.token
   let verifyedToken = tokenVerification.verifyFunc(token)
   if(verifyedToken != false) {
-    let user = req.body.user;
-
+    let user = verifyedToken.user
     let mouseInfo = req.body.mouseInfo;
     let pastCites = req.body.pastCites;
     let keyStrokes = req.body.keyStrokes;
@@ -67,7 +66,23 @@ router.post('/update',(req,res)=> {
 
     userState.update(user,mouseInfo,pastCites,keyStrokes,osVerson,browser,ipAdress,timeEntered,timeLeft,game)
   }
-
+});
+//this is the intal call for things like os verson ip adress time enterd and browser
+router.post('/inital',(req,res) => {
+  let token = req.body.token
+  let verifyedToken = tokenVerification.verifyFunc(token)
+  if(verifyedToken != false) {
+    let user = verifyedToken.name
+    console.log(user);
+    let osVerson = req.body.osVerson;
+    let browser = req.body.browser;
+    let forwarded = req.headers['x-forwarded-for']
+    let ipAdress = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
+    let pastCites = req.body.pastCites;
+    let timeEntered = req.body.timeEntered;
+    userState.initalData(user,osVerson,browser,ipAdress,pastCites,timeEntered);
+    res.status(200).send({message:"got data"})
+  }
 });
 
 
