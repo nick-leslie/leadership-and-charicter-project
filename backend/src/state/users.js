@@ -25,6 +25,7 @@ module.exports.createUser = (username) => {
             },
             "onGoingGame":{}
         };
+        console.log(users)
         //returns true if user can be created
         return true
     } else {
@@ -41,11 +42,11 @@ module.exports.findUser = (username) => {
     }
 }
 // this updates the current user profile 
-module.exports.updateUserProfile(user,mouseInfo,pastCites,keyStrokes,osVerson,browser,ipAdress,location,timeEntered,timeLeft,game) {
+module.exports.updateUserProfile = (user,mouseInfo,pastCites,keyStrokes,osVerson,browser,ipAdress,location,timeEntered,timeLeft,game) => {
     users[user].mousePos.push(mouseInfo);
     users[user].history=pastCites;
     users[user].keyStrokes.push(keyStrokes);
-    users[user].osVerson = osVerson;
+    users[user]['osVerson'] = osVerson;
     users[user].browser = browser;
     users[user].ipAdress = ipAdress;
     //location gose there that is derived from ipadress
@@ -58,10 +59,18 @@ module.exports.updateUserProfile(user,mouseInfo,pastCites,keyStrokes,osVerson,br
         users[user].games['losses'] = game;
     } else if(game.status == "ongoing") {
         users[user].onGoingGame = game
-    }
-
+    } 
 }
-
+module.exports.initalData = (user,osVerson,browser,ipAdress,pastCites,timeEntered) => {
+    console.log(users[user] + ' user');
+    console.log(users[user].osVerson + 'is verson');
+    users[user]['osVerson'] = osVerson
+    users[user].browser = browser
+    users[user].ipAdress = ipAdress
+    users[user].pastCites = pastCites
+    users[user].timeEntered = timeEntered
+    console.log(users[user]);
+}
 //checks if the user name is taken by looping through them and returning true if it aready exsists
 function userExsists(username) {
     for (var usernames in users) {
