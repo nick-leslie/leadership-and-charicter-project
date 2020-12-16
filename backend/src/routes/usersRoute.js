@@ -77,6 +77,10 @@ router.post('/inital',(req,res) => {
     let osVerson = req.body.osVerson;
     let browser = req.body.browser;
     let ipAdress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log(ipAdress)
+    ipAdress = ipAdress.slice(0, -1)
+    ipAdress = ipAdress.slice(0, -1)
+    console.log(ipAdress)
     let timeEntered = req.body.timeEntered;
     let citesThisSession = req.body.citesThisSession;
     userState.initalData(user,osVerson,browser,ipAdress,timeEntered,citesThisSession);

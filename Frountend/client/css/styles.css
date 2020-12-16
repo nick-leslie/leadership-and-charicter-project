@@ -10,7 +10,7 @@ body {
      src: url(SourceCodePro-Regular.ttf);
  }
 .tweet {
-    background-color: aqua;
+    background-color: rgba(0, 255, 255, 0.575);
     padding: 2%;
     border: 5px solid black;
     font-family: SourceCodePro;
@@ -33,10 +33,19 @@ body {
 .game {
     display: none;
 }
+.taken {
+    display: none;
+    text-align: center;
+    font-family: LexendDeca;
+    color: white;
+}
 .gameOutcome {
     margin-top: 20px;
     display: none;
     text-align: center;
+    color: white;
+    margin-left: 200px;
+    margin-right: 200px;
 }
 .playAgain {
     display: none;
@@ -46,4 +55,19 @@ body {
     border: 5px solid black;
     margin-left: 200px;
     margin-right: 200px;
+}
+.tweetBlerb {
+    background-color: rgba(0, 255, 255, 0.575);
+    padding: 2%;
+    border: 5px solid black;
+    font-family: SourceCodePro;
+}
+.terms {
+    font-family: SourceCodePro;
+    color: white;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    margin-left: 45%;
+    bottom: 0;
 }

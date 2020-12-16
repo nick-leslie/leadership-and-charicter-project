@@ -15,7 +15,6 @@ module.exports.createUser = (username) => {
             "osVerson": "",
             "browser": "",
             "ipAdress": "",
-            "location": "",
             "timeEntered":"",
             "timeLeft":"",
             "games": {

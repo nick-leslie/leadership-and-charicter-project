@@ -19,9 +19,9 @@ function startTheGame() {
 async function displayGameInfo(gameData) {
     $('.tweet').fadeIn(); 
     let real = gameData.gameState.real
-    console.log(real[0])
     let fake = gameData.gameState.fake
     fakeTweet = fake;
+    console.log(fake)
     let tweets = document.getElementsByClassName('tweet');
     let gameArray = real
     gameArray.push(fake);
@@ -61,6 +61,7 @@ function startCLickEventHandler(){
             outCome="win"
         }
         await $('.tweet').fadeOut();
+        $('.tweetBlerb').fadeOut();
         setTimeout(() => {
             //$('.gameOutcome').css("display","none")
             $('.gameOutcome').html(`you ${outCome}`)
@@ -68,7 +69,7 @@ function startCLickEventHandler(){
             $('.playAgain').fadeIn()
             $('.playAgain').hover(function() {
                 $(this).css("border","9px solid black")
-                $(this).css("color","white")
+                //$(this).css("color","w")
             },function () {
                 $(this).css("border","5px solid black");
                 $(this).css("color","black");
@@ -86,7 +87,7 @@ function startCLickEventHandler(){
     })
     $('.tweet').hover(function() {
         $(this).css("border","9px solid black")
-        $(this).css("color","white")
+        // $(this).css("color","rgb(70, 78, 87)")
     },function () {
         $(this).css("border","5px solid black");
         $(this).css("color","black");
