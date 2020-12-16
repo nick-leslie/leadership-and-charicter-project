@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path');
-const REAL_NEEDED = 9;
+const REAL_NEEDED = 5;
 let state = convertToJson();
 let real = getReal();
 

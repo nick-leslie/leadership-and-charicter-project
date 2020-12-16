@@ -10,12 +10,17 @@ setTimeout(() => {
                 console.log(jsondata)
                 sessionStorage.Token = jsondata.token
                 console.log(sessionStorage.Token)
+                $('.taken').fadeOut()
                 showGame()
                 startTheGame();
                 setTimeout(() => {
                     initalSend();
                 }, 500);
                 console.log(grabBrowser())
+            },
+            error: function(){
+                console.log("fail")
+                $('.taken').fadeIn()
             }
         })
     })
