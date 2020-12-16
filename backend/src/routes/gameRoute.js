@@ -6,7 +6,6 @@ const verification = require('../auth/verifyApiKey');
 //user must send in a token to be authorised 
 router.post('/start',(req,res)=> {
     let token = req.body.token;
-    console.log(verification.verifyFunc(token))
     if(verification.verifyFunc(token) != false) {
         let tweet = gameState.grabTweets();
         res.status(200).send({gameState:tweet});

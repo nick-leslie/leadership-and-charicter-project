@@ -39,8 +39,9 @@ function initalSend() {
             token:sessionStorage.Token,
             osVerson:navigator.platform,
             browser:grabBrowser(),
-            pastCites:"",
-            timeEntered:""
+            timeEntered:new Date().toLocaleTimeString(),
+            citesThisSession:history.length
+
         },
         success: function(jsondata){
         }

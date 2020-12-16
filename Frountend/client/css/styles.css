@@ -1,10 +1,24 @@
+body {
+    background-image: linear-gradient(to right,#2233a5,#8d58fe);
+}
+@font-face {
+    font-family: LexendDeca;
+    src: url(LexendDeca-Regular.ttf);
+ }
+ @font-face {
+     font-family: SourceCodePro;
+     src: url(SourceCodePro-Regular.ttf);
+ }
 .tweet {
     background-color: aqua;
     padding: 2%;
     border: 5px solid black;
+    font-family: SourceCodePro;
 }
 .title {
     text-align: center;
+    color: white;
+    font-family: LexendDeca;
 }
 .login {
     display: block;
