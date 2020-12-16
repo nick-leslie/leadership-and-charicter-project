@@ -1,5 +1,6 @@
 let playerChoise;
 let fakeTweet;
+let currentGame;
 // make a call to the server and get game info
 function startTheGame() {
     $.ajax({
@@ -10,27 +11,27 @@ function startTheGame() {
         success: function(jsondata){
             console.log(jsondata)
             displayGameInfo(jsondata)
+            currentGame = jsondata;
             startCLickEventHandler();
         }
     })
 }
-function displayGameInfo(gameData) {
+async function displayGameInfo(gameData) {
     $('.tweet').fadeIn(); 
     let real = gameData.gameState.real
     console.log(real[0])
     let fake = gameData.gameState.fake
     fakeTweet = fake;
-    console.log(fakeTweet);
-    console.log(fake)
     let tweets = document.getElementsByClassName('tweet');
     let gameArray = real
-    gameArray.push(fake)
-    gameArray = shuffle(gameArray);
+    gameArray.push(fake);
+    gameArray = await shuffle(gameArray);
     //TODO add shuffling
     // this sets the inner html to values
     for (let i = 0; i < tweets.length; i++) {
         tweets[i].innerHTML = gameArray[i]
     }
+    sendGameData();
 }
 
 //this is not mine but it shuffles an array
@@ -61,7 +62,7 @@ function startCLickEventHandler(){
         }
         await $('.tweet').fadeOut();
         setTimeout(() => {
-            $('.gameOutcome').css("display","none")
+            //$('.gameOutcome').css("display","none")
             $('.gameOutcome').html(`you ${outCome}`)
             $('.gameOutcome').fadeIn(); 
             $('.playAgain').fadeIn()
@@ -72,6 +73,8 @@ function startCLickEventHandler(){
                 $(this).css("border","5px solid black");
                 $(this).css("color","black");
             }) 
+            console.log(outCome)
+            sendEndStatus(outCome);
             $('.playAgain').click(()=> {
                 $('.gameOutcome').fadeOut(); 
                 $('.playAgain').fadeOut()
@@ -89,3 +92,42 @@ function startCLickEventHandler(){
         $(this).css("color","black");
     }) 
   }
+function sendGameData() {
+    console.log(currentGame);
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url:  ip() +'users/gameDataOngoing',
+        data: {
+            token:sessionStorage.Token,
+            ongoingGame:currentGame
+        },
+        success: function(jsondata){
+            console.log(jsondata)
+        }
+    })
+}
+// this will send the ending status but im lazy so I will do it latter
+async function sendEndStatus(outcome) {
+    let endData = await formatEndData(outcome);
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url:  ip() +'users/finishedGame',
+        data: {
+            token:sessionStorage.Token,
+            finishedGame:endData
+        },
+        success: function(jsondata){
+            console.log(jsondata)
+        }
+    })
+}
+function formatEndData(outCome) {
+    let endJson = {}
+    endJson.game = currentGame;
+    endJson.playerChoise = playerChoise
+    endJson.status = outCome
+    console.log(endJson)
+    return endJson
+}

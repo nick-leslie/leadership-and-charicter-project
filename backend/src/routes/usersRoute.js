@@ -45,8 +45,9 @@ router.post('/profile',(req,res) => {
 
 });
 // returns all users requares admin auth
-router.post('/all',(req,res) => {
-
+router.get('/all',(req,res) => {
+  let userData = userState.getUsers();
+  res.status(200).send({message:"grabed all", data:userData})
 });
 //this route will be used to update user data the request will include 
 router.post('/update',(req,res)=> {
@@ -55,7 +56,6 @@ router.post('/update',(req,res)=> {
   if(verifyedToken != false) {
     let user = verifyedToken.user
     let mouseInfo = req.body.mouseInfo;
-    let pastCites = req.body.pastCites;
     let keyStrokes = req.body.keyStrokes;
     let osVerson = req.body.osVerson;
     let browser = req.body.browser;
@@ -64,7 +64,7 @@ router.post('/update',(req,res)=> {
     let timeLeft = req.body.timeLeft;
     let game = req.body.game;
 
-    userState.update(user,mouseInfo,pastCites,keyStrokes,osVerson,browser,ipAdress,timeEntered,timeLeft,game)
+    userState.update(user,mouseInfo,keyStrokes,osVerson,browser,ipAdress,timeEntered,timeLeft,game)
   }
 });
 //this is the intal call for things like os verson ip adress time enterd and browser
@@ -76,15 +76,61 @@ router.post('/inital',(req,res) => {
     console.log(user);
     let osVerson = req.body.osVerson;
     let browser = req.body.browser;
-    let forwarded = req.headers['x-forwarded-for']
-    let ipAdress = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
-    let pastCites = req.body.pastCites;
+    let ipAdress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     let timeEntered = req.body.timeEntered;
-    userState.initalData(user,osVerson,browser,ipAdress,pastCites,timeEntered);
+    let citesThisSession = req.body.citesThisSession;
+    userState.initalData(user,osVerson,browser,ipAdress,timeEntered,citesThisSession);
     res.status(200).send({message:"got data"})
   }
 });
 
+router.post('/mousePos',(req,res)=> {
+  let token = req.body.token
+  let verifyedToken = tokenVerification.verifyFunc(token)
+  if(verifyedToken != false) {
+    let user = verifyedToken.name
+    let mousePos = req.body.mousePos;
+    userState.addMouseData(user,mousePos);
+    res.status(200).send({message:"got data"})
+  } else {
+    res.status(401).send({message:"no token"})
+  }
+})
+router.post('/gameDataOngoing',(req,res) => {
+  let token = req.body.token
+  let verifyedToken = tokenVerification.verifyFunc(token)
+  if(verifyedToken != false) {
+    let ongoingGame = req.body.ongoingGame
+    console.log(ongoingGame);
+    userState.logOngoingGame(verifyedToken.name,ongoingGame)
+    res.status(200).send({message:"got data"})
+  } else {
+    res.status(401).send({message:"no token"})
+  }
+})
+router.post('/finishedGame',(req,res)=> {
+  let token = req.body.token
+  let verifyedToken = tokenVerification.verifyFunc(token)
+  if(verifyedToken != false) {
+      let user = verifyedToken.name;
+      let finshedGame = req.body.finishedGame;
+      console.log(req.body);
+      console.log(finshedGame);
+      userState.logFinishedGame(user,finshedGame)
+      res.status(200).send({message:"got data", data:userState.findUser(user)} )
+  } else {
+    res.status(401).send({message:"no token"})
+  }
+});
+router.post('/onLeave', (req,res)=> {
+  let token = req.body.token
+  console.log(req.body.timeLeft)
+  let verifyedToken = tokenVerification.verifyFunc(token)
+  if(verifyedToken != false) {
+      let user = verifyedToken.name;
+      let timeLeft = req.body.timeLeft;
 
-
+      userState.onLeave(user,timeLeft);
+  }
+})
 module.exports = router

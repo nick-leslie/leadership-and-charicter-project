@@ -14,5 +14,6 @@ app.use(cookieParser())
 app.use('/',express.static("../../Frountend/client"));
 app.use('/game',gameRoute)
 app.use('/users',userRoute);
+app.use('/admin',express.static('../../Frountend/admin'))
 
 module.exports = app;
